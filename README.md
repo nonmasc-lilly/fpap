@@ -7,7 +7,7 @@ managed to make at least three fuckass versions of. An example follows:
 #include <fpap.h>
 int main(void) {
         FPAP instance;
-        FPAP_COLOR buffer[0x40] = {0};
+        FPAP_COLOR buffer[0x40] = {0xFF000000}; /* Accounts for Alpha */
         int i;
 
         fpap_init(&instance, 800, 800, "Hello World!", FPAP_VSYNC);

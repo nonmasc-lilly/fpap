@@ -5,22 +5,16 @@
 
 int main(int argc, char **argv) {
         FPAP instance;
+        FPAP_COLOR buffer[8*8] = {0xFF000000};
         int i;
-        FPAP_COLOR buffer[8*8];
-        FPAP_BOOL changed = FPAP_TRUE;
+
         fpap_init(&instance, 800, 800, "Window", FPAP_VSYNC);
-        i = 0;
-        for(i = 0; i < 64; i++) {
-                buffer[i] = 0xFFFF00FF;
-        }
-        while(fpap_frame(&instance) != FPAP_WINDOW_CLOSED) {
-                if(changed == FPAP_TRUE) {
-                        changed = FPAP_FALSE;
-                        fpap_draw(&instance, buffer, 8, 8);
-                }
-                buffer[0] = ~buffer[0];
-                changed = FPAP_TRUE;
-        }
+        for(i = 0; i < 8; i++)
+                buffer[i + i * 8] = 0xFFFF00FF;
+
+        fpap_draw(&instance, buffer, 8, 8);
+        while(fpap_frame(&instance) != FPAP_WINDOW_CLOSED);
+
         fpap_term(&instance);
         exit(0);
 }
