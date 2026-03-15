@@ -5,7 +5,8 @@
 #define S_WINDOW void *
 struct s_fpap {
         S_WINDOW window;
-        FPAP_WORD width, height;
+	char  *input;
+        FPAP_WORD width, height, page_size, input_length;
         FPAP_FLAGS flags;
 };
 #undef S_WINDOW

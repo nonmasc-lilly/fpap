@@ -34,6 +34,12 @@ typedef unsigned long FPAP_FLAGS;
 
 typedef void *FPAP; /* Implementation defined */
 
+typedef enum {
+	FPAP_PAGESIZE, /* An FPAP_WORD determining how large a page is */
+
+	FPAP_PROPERTY__MAX
+} FPAP_PROPERTY;
+
 FPAP_ERROR fpap_init(
   FPAP *instance,
   FPAP_WORD width,
@@ -48,6 +54,10 @@ FPAP_ERROR fpap_draw(
   FPAP_WORD width,
   FPAP_WORD height
 );
+FPAP_ERROR fpap_set(FPAP *instance, FPAP_PROPERTY property, const void *value);
+FPAP_ERROR fpap_get(FPAP *instance, FPAP_PROPERTY property, void *value);
+/* Poll for input, gets Null delimited list of all current input in order. */
+FPAP_ERROR fpap_poll(FPAP *instance, const char **input);
 FPAP_ERROR fpap_term(FPAP *instance);
 
 #endif

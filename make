@@ -2,16 +2,23 @@
 
 CFLAGS="-std=c90 -Wpedantic"
 DEBUG=false
+SPEC=false
 TEST=false
-while getopts "dt" OPT; do
+while getopts "dst" OPT; do
 	case $OPT in
 	d) DEBUG=true;;
+	s) SPEC=true;;
 	t) TEST=true
 	esac
 done
 
 if [[ ! -d build/ ]]; then
 	mkdir -p build
+fi
+
+if [[ $SPEC = true ]]; then
+	pdftex -jobname=fpap-spec -output-directory=build docs/main.tex\
+	|| exit 1
 fi
 
 if [[ $DEBUG = true ]]; then

@@ -1,0 +1,21 @@
+\chapter{Syntactical Conventions}
+
+\noindent Although this standard is written with the intention of being
+language agnostic, for the means of displaying types and functions the format
+used by the C programming language should do. In this case that looks like so:
+
+\definitions
+\name{name}
+\code
+TYPE(TYPE arg1, TYPE arg2, etc...)\cr
+\ecode
+\noindent Description.
+
+\leftline{\tt ERRORS}
+\error err1: error description
+\error err2: error description
+\edefinitions
+
+\noindent The errors specified may not be possible to cause within the
+function on a specific implementation, however they must all have unique
+numeric values.

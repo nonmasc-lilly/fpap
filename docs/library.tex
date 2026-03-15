@@ -1,0 +1,95 @@
+\chapter{Library}
+
+\section{Types}
+
+\noindent An implementation shall provide handling for the following types:
+
+\bullet{\tt FPAP\_BYTE} The type representing a single byte.
+\bullet{\tt FPAP\_WORD} The type representing two bytes.
+\bullet{\tt FPAP\_DWORD} The type representing four bytes.
+\bullet{\tt FPAP\_COORD} The type representing a pixel coordinate.
+\bullet{\tt FPAP\_COLOR} The type representing a color.
+\bullet{\tt FPAP\_BOOL} The type representing a boolean.
+\bullet{\tt FPAP\_PROPERTY} The type representing a propery of an instance.
+\bullet{\tt FPAP\_ERROR} The type representing an error code.
+\bullet{\tt FPAP\_PTR} The type representing an address.
+\bullet{\tt FPAP\_STR} The type representing a pointer.
+\bullet{\tt FPAP} The type representing a pointer to the current instance.
+
+\section{Functions}
+
+\noindent The following functions shall exist:
+
+\definitions
+\name{fpap\_init}
+\code
+FPAP\_ERROR fpap\_init(FPAP instance, FPAP\_COORD width, FPAP\_COORD height,\cr
+\qquad FPAP\_STR name)\cr
+\ecode
+\noindent The implementation shall create a new instance, initialise the
+window system and create a new window. The region of the window shall be
+determined in an implementation defined manner using the width and height
+arguments. The name is used in an implementation defined manner to register
+the window with the window system.
+
+\leftline{\tt ERRORS}
+\error FPAP\_SUCCESS: No error.
+\error FPAP\_NO\_WINDOW\_SYSTEM: Could not initialise window system.
+\error FPAP\_NO\_WINDOW: Could not not initialise window.
+\next{fpap\_term}
+\code
+FPAP\_ERROR fpap\_term(FPAP instance)\cr
+\ecode
+\noindent The implementation destroy the instance, window system, and window
+in an implementation defined way. Further reference to the instance specified
+is undefined behaviour.
+
+\leftline{\tt ERRORS}
+\error FPAP\_SUCCESS: No error.
+\next{fpap\_frame}
+\code
+FPAP\_ERROR fpap\_frame(FPAP instance)\cr
+\ecode
+\noindent The window system shall write any unwritten pixels from the
+framebuffer to the window and return any required information to the instance.
+
+\leftline{\tt ERRORS}
+\error FPAP\_SUCCESS: No error.
+\error FPAP\_WINDOW\_CLOSED: The window has been closed, it is undefined
+behaviour to re-call \tt fpap\_frame \rm after this point.
+\next{fpap\_draw}
+\code
+FPAP\_ERROR fpap\_draw(FPAP instance, FPAP\_COLOR *content,\cr
+\qquad FPAP\_COORD width, FPAP\_COORD height)\cr
+\ecode
+\noindent Content shall be written to the framebuffer, scaled such that the
+written content convers the entirety of the framebuffer and no more. The
+width and height designate the geometry of content.
+
+\leftline{\tt ERRORS}
+\error FPAP\_SUCCESS: No error.
+\next{fpap\_set}
+\code
+FPAP\_ERROR fpap\_set(FPAP instance, FPAP\_PROPERTY, FPAP\_PTR value)\cr
+\ecode
+\noindent The implementation defined property specified shall be set to the
+region of memory at that specified in value.
+
+\leftline{\tt ERRORS}
+\error FPAP\_SUCCESS: No error.
+\error FPAP\_UNDEFINED\_PROPERTY: Property specified does not exist.
+\error FPAP\_INACCESSIBLE: Property could not currently be specified.
+\next{fpap\_get}
+\code
+FPAP\_ERROR fpap\_get(FPAP instance, FPAP\_PROPERTY, FPAP\_PTR value)\cr
+\ecode
+\noindent The region of memory specified in value shall be set to the
+implementation defined property specified.
+
+\leftline{\tt ERRORS}
+\error FPAP\_SUCCESS: No error.
+\error FPAP\_UNDEFINED\_PROPERTY: Property specified does not exist.
+\error FPAP\_INACCESSIBLE: Property could not currently be specified.
+\edefinitions
+
+\vfill\break

@@ -1,0 +1,50 @@
+\font\fpf=cmtt10 at 18pt
+
+\newcount\tabsp
+\def\tab#1{%
+\tabsp #1\relax%
+\multiply\tabsp-65536\relax%
+\advance\tabsp\hsize%
+\hbox\bgroup\hskip #1 pt%
+\hsize\tabsp sp\relax%
+\vbox\bgroup%
+}
+\def\etab{\egroup\egroup}
+
+\newcount\chaptercount
+\newcount\sectioncount
+\chaptercount0\relax
+\def\chapter#1{%
+\sectioncount0\relax%
+\advance\chaptercount1\relax%
+\centerline{\bf\the\chaptercount. \it #1}%
+\smallskip%
+\hrule\medskip%
+}
+\def\section#1{%
+\advance\sectioncount1\relax%
+\medskip%
+\tab{20}%
+\vbox{\hbox{\bf\the\chaptercount.\the\sectioncount. \it #1}\smallskip\hrule}%
+\etab%
+\smallskip%
+}
+
+\def\bullet{\item{$\circ$}}
+\def\definitions{%
+\let\par\endgraf\relax%
+\bgroup\def\name##1{%
+\vbox{\hbox{\bf ##1}\smallskip\hrule}\penalty1000\smallskip%
+\tab{20}\noindent\ignorespaces%
+}%
+\def\next##1{\etab\medskip\name{##1}}
+}
+\def\edefinitions{\etab\egroup}
+\newcount\limitcount
+\def\limit #1: (#2, #3){%
+\advance\limitcount1\relax%
+\item{\the\limitcount.} \tt#1:\rm ($#2$, $#3$)%
+}
+\def\error #1:{\bullet {\tt #1:}}
+\def\code{\halign\bgroup\tt##\hfil\cr}
+\def\ecode{\egroup}
