@@ -3,7 +3,6 @@
 \section{Types}
 
 \noindent An implementation shall provide handling for the following types:
-
 \bullet{\tt FPAP\_BYTE} The type representing a single byte.
 \bullet{\tt FPAP\_WORD} The type representing two bytes.
 \bullet{\tt FPAP\_DWORD} The type representing four bytes.
@@ -70,7 +69,8 @@ width and height designate the geometry of content.
 \error FPAP\_SUCCESS: No error.
 \next{fpap\_set}
 \code
-FPAP\_ERROR fpap\_set(FPAP instance, FPAP\_PROPERTY, FPAP\_PTR value)\cr
+FPAP\_ERROR fpap\_set(FPAP instance, FPAP\_PROPERTY property,\cr
+\qquad FPAP\_PTR value)\cr
 \ecode
 \noindent The implementation defined property specified shall be set to the
 region of memory at that specified in value.
@@ -81,7 +81,8 @@ region of memory at that specified in value.
 \error FPAP\_INACCESSIBLE: Property could not currently be specified.
 \next{fpap\_get}
 \code
-FPAP\_ERROR fpap\_get(FPAP instance, FPAP\_PROPERTY, FPAP\_PTR value)\cr
+FPAP\_ERROR fpap\_get(FPAP instance, FPAP\_PROPERTY property,\cr
+\qquad FPAP\_PTR value)\cr
 \ecode
 \noindent The region of memory specified in value shall be set to the
 implementation defined property specified.

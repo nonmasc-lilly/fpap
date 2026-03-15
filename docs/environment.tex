@@ -9,15 +9,16 @@ comes with some considerations.
 
 \noindent If provided an implementation shall ensure that objects of the type
 specified (if provided) may represent at least the following limits specified
-in the form: `<type>: (<minimum>, <maximum>)'.  The phrase: `maxof(<type>)'
-refers to the maximum limmit of the type enclosed in parenthesis.
+in the form: `\tt<type>: (<minimum>, <maximum>)\rm'.  The phrase:
+`\tt maxof(<type>)\rm' refers to the maximum limmit of the type enclosed in
+parenthesis.
 
 \limitcount0\relax
 \limit FPAP\_BYTE: (0, 127)
 \limit FPAP\_WORD: (0, maxof(\tt FPAP\_BYTE\rm) * 2)
 \limit FPAP\_DWORD: (0, maxof(\tt FPAP\_BYTE\rm) * 4)
 \limit FPAP\_COLOR: (0, maxof(\tt FPAP\_DWORD\rm))
-\limit FPAP\_BOOL:  (0, 1)
+\limit FPAP\_BOOL:  (FPAP\_FALSE, FPAP\_TRUE)
 
 \noindent The type `FPAP\_PTR' has unspecified limits, yet shall be able to
 store the addresses of all objects used as arguments to fpap functions and
