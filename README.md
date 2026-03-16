@@ -1,6 +1,6 @@
 # FPAP
 
-This is an implementation of the Framebuffer Abstraction API V01.00.00.
+This is an implementation of the Framebuffer Abstraction API V01.00.XX.
 
 ```C
 #include <fpap.h>

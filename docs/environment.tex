@@ -50,4 +50,14 @@ behaviour to access the framebuffer.
 \error FPAP\_UNDEFINED\_PROPERTY: The property specified does not exist.
 \error FPAP\_INACCESSIBLE: The property specified could not be accessed.
 
+\section{Properties}
+
+\noindent A property is an implementation defined value used to index objects
+within the fpap instance. They may be get and set by the user with the
+respective \tt fpap\_get \rm and \tt fpap set \rm commands.
+
+Identifiers used to designate properties shall be prefixed with
+`FPAP\_PREFIX\_'. Such that if an implementation should have a property for
+vsync, it may be called `FPAP\_PREFIX\_VSYNC'.
+
 \vfill\break
