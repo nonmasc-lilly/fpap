@@ -23,6 +23,8 @@ typedef FPAP_DWORD FPAP_COLOR;
 typedef FPAP_BYTE FPAP_BOOL;
 typedef enum {
 	FPAP_PROPERTY_NULL,
+	FPAP_PROPERTY_INPUT,
+	FPAP_PROPERTY_INPUT_POP,
 	FPAP_PROPERTY_VSYNC
 } FPAP_PROPERTY;
 typedef enum {
@@ -39,6 +41,12 @@ typedef FPAP_PTR FPAP;
 
 #define FPAP_TRUE 1
 #define FPAP_FALSE 0
+
+struct fpap_ext_input_event {
+	char character;
+	FPAP_BYTE page;
+	FPAP_BOOL pressed;
+};
 
 FPAP_ERROR fpap_init(FPAP *instance, FPAP_COORD width, FPAP_COORD height,
 	FPAP_STR name);

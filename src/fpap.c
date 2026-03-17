@@ -2,8 +2,18 @@
 
 #include "fpap.h"
 
+struct s_input_event {
+	char character;
+	FPAP_BYTE page;
+	FPAP_BOOL pressed;
+};
+
 struct s_fpap {
 	void *window;
+	struct {
+		struct s_input_event *content;
+		FPAP_DWORD capacity, top;
+	} input;
 	FPAP_WORD width, height;
 	FPAP_BOOL vsync;
 };
@@ -18,12 +28,17 @@ FPAP_STR name)
 	if (!s_winsys_init())
 		return FPAP_NO_WINDOW_SYSTEM;
 
-	fpap = malloc(sizeof(*fpap));
+	fpap = calloc(1,sizeof(*fpap));
+	fpap->input.capacity = 0x100;
+	fpap->input.top = 0;
+	fpap->input.content = calloc(1, fpap->input.capacity);
+
 	fpap->window = s_create_window(fpap, width, height, name);
 	if (fpap->window == NULL)
 		return FPAP_NO_WINDOW;
 	s_window_context(fpap);
 	s_handle_window_resize(fpap);
+	s_handle_window_input(fpap);
 
 	glViewport(0, 0, width, height);
 
@@ -111,11 +126,35 @@ const FPAP_PTR value)
 FPAP_ERROR fpap_get(FPAP instance, FPAP_PROPERTY property, FPAP_PTR value)
 {
 	struct s_fpap *fpap;
+	struct s_input_event *event;
+	struct fpap_ext_input_event *value_input;
 
 	fpap = (struct s_fpap *)instance;
 	switch (property) {
 	case FPAP_PROPERTY_VSYNC:
 		*(FPAP_BOOL *)value = fpap->vsync;
+		break;
+	case FPAP_PROPERTY_INPUT:
+	case FPAP_PROPERTY_INPUT_POP:
+		if (fpap->input.top == 0)
+			event = fpap->input.content + fpap->input.capacity - 1;
+		else
+			event = fpap->input.content + fpap->input.top - 1;
+
+		value_input = value;
+		value_input->character = event->character;
+		value_input->page = event->page;
+		value_input->pressed = event->pressed;
+
+		if (property == FPAP_PROPERTY_INPUT || event->character
+		== '\0')
+			break;
+
+		if (fpap->input.top == 0)
+			fpap->input.top = fpap->input.capacity - 1;
+		else
+			fpap->input.top -= 1;
+
 		break;
 	default:
 		return FPAP_UNDEFINED_PROPERTY;

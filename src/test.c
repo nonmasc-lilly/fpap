@@ -7,6 +7,7 @@ int main(int argc, char **argv) {
 	FPAP instance;
 	FPAP_BOOL vsync = FPAP_TRUE;
 	FPAP_COLOR buffer[8*8] = {0xFF000000};
+	struct fpap_ext_input_event input_event;
 	int i;
 
 	fpap_init(&instance, 800, 800, "Window");
@@ -15,7 +16,11 @@ int main(int argc, char **argv) {
 		buffer[i + i * 8] = 0xFFFF00FF;
 
 	fpap_draw(instance, buffer, 8, 8);
-	while (fpap_frame(instance) != FPAP_WINDOW_CLOSED);
+	while (fpap_frame(instance) != FPAP_WINDOW_CLOSED) {
+		fpap_get(instance, FPAP_PROPERTY_INPUT_POP, &input_event);
+		if (input_event.pressed && input_event.character == 'q')
+			break;
+	}
 
 	fpap_term(instance);
 	exit(0);
