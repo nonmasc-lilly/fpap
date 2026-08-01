@@ -24,6 +24,21 @@ addition in a way which does not break backwards compatibility, while a patch
 specifies a small change to spelling, wording, or functionality that should
 not effect existing implementations.
 
+\section{Naming}
+
+\noindent Identifiers are named according to their type. A ``symbol'' is for
+the remainder of this section defined as either a variable or function which
+exists at runtime, and a ``macro'' is any value which does not.
+
+A symbol is defined in a case such that each logical ``word'' is delimited by
+underscores i.e., ``function name'' becomes ``function\_name''. All symbols are
+written in lowercase and are prefixed by the word ``fpap'' (which is delimited
+as normal).
+
+A macro is then defined in a similar manner, except that it must be uppercase.
+
+The prefix ``s\_fpap'' is reserved for implementation use.
+
 \section{Definitions}
 
 \definitions
