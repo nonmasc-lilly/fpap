@@ -1,6 +1,11 @@
 # FPAP
 
-This is an implementation of the Framebuffer Abstraction API V03.01.XX.
+## WARNING
+The specification in this repository is no longer current as of FPAP V03.01.05.
+One may find the new specification at:
+<https://github.com/lilly-tau/fpap-spec>.
+
+This is an implementation of the Framebuffer Abstraction API V03.01.04.
 
 ```C
 #include <fpap.h>
