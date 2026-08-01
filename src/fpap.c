@@ -15,6 +15,7 @@ struct s_fpap {
 		FPAP_DWORD capacity, top;
 	} input;
 	FPAP_WORD width, height;
+	FPAP_BYTE rotation;
 	FPAP_BOOL vsync;
 };
 #include "platform/fpap.c"
@@ -32,6 +33,7 @@ FPAP_STR name)
 	fpap->input.capacity = 0x100;
 	fpap->input.top = 0;
 	fpap->input.content = calloc(1, fpap->input.capacity);
+	fpap->rotation = 0;
 
 	fpap->window = s_create_window(fpap, width, height, name);
 	if (fpap->window == NULL)
@@ -56,6 +58,7 @@ FPAP_STR name)
 FPAP_ERROR fpap_frame(FPAP instance)
 {
 	struct s_fpap *fpap;
+	float tex_coords[4 * 2];
 
 	fpap = (struct s_fpap *)instance;
 	if (glfwWindowShouldClose(fpap->window))
@@ -66,17 +69,81 @@ FPAP_ERROR fpap_frame(FPAP instance)
 	glClear(GL_COLOR_BUFFER_BIT);
 	glEnable(GL_TEXTURE_2D);
 
+	#define TX_0x 0.0
+	#define TX_0y 0.0
+	#define TX_1x 0.0
+	#define TX_1y 1.0
+	#define TX_2x 1.0
+	#define TX_2y 0.0
+	#define TX_3x 1.0
+	#define TX_3y 1.0
+	switch (fpap->rotation & 0x03) {
+	default:
+	case 0:
+		tex_coords[0] = TX_0x;
+		tex_coords[1] = TX_0y;
+
+		tex_coords[2] = TX_1x;
+		tex_coords[3] = TX_1y;
+
+		tex_coords[4] = TX_2x;
+		tex_coords[5] = TX_2y;
+
+		tex_coords[6] = TX_3x;
+		tex_coords[7] = TX_3y;
+		break;
+	case 1:
+		tex_coords[0] = TX_1x;
+		tex_coords[1] = TX_1y;
+
+		tex_coords[2] = TX_3x;
+		tex_coords[3] = TX_3y;
+
+		tex_coords[4] = TX_0x;
+		tex_coords[5] = TX_0y;
+
+		tex_coords[6] = TX_2x;
+		tex_coords[7] = TX_2y;
+		break;
+	case 2:
+		tex_coords[0] = TX_3x;
+		tex_coords[1] = TX_3y;
+
+		tex_coords[2] = TX_2x;
+		tex_coords[3] = TX_2y;
+
+		tex_coords[4] = TX_1x;
+		tex_coords[5] = TX_1y;
+
+		tex_coords[6] = TX_0x;
+		tex_coords[7] = TX_0y;
+		break;
+	case 3:
+		tex_coords[0] = TX_2x;
+		tex_coords[1] = TX_2y;
+
+		tex_coords[2] = TX_0x;
+		tex_coords[3] = TX_0y;
+
+		tex_coords[4] = TX_3x;
+		tex_coords[5] = TX_3y;
+
+		tex_coords[6] = TX_1x;
+		tex_coords[7] = TX_1y;
+		break;
+	}
+
 	glBegin(GL_TRIANGLE_STRIP);
-		glTexCoord2f( 0.0, 0.0);
+		glTexCoord2f(tex_coords[0], tex_coords[1]);
 		glVertex2f(  -1.0, 1.0);
 	
-		glTexCoord2f( 0.0, 1.0);
+		glTexCoord2f(tex_coords[2], tex_coords[3]);
 		glVertex2f(  -1.0,-1.0);
 	
-		glTexCoord2f( 1.0, 0.0);
+		glTexCoord2f(tex_coords[4], tex_coords[5]);
 		glVertex2f(   1.0, 1.0);
 	
-		glTexCoord2f( 1.0, 1.0);
+		glTexCoord2f(tex_coords[6], tex_coords[7]);
 		glVertex2f(   1.0,-1.0);
 	glEnd();
 	glFlush();
@@ -117,6 +184,9 @@ const FPAP_PTR value)
 	case FPAP_PROPERTY_VSYNC:
 		fpap->vsync = *(FPAP_BOOL *)value;
 		break;
+	case FPAP_PROPERTY_ROTATION:
+		fpap->rotation = *(FPAP_BYTE*)value;
+		break;
 	default:
 		return FPAP_UNDEFINED_PROPERTY;
 	}
@@ -155,6 +225,9 @@ FPAP_ERROR fpap_get(FPAP instance, FPAP_PROPERTY property, FPAP_PTR value)
 		else
 			fpap->input.top -= 1;
 
+		break;
+	case FPAP_PROPERTY_ROTATION:
+		*(FPAP_BYTE*)value = fpap->rotation;
 		break;
 	default:
 		return FPAP_UNDEFINED_PROPERTY;

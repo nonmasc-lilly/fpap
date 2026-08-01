@@ -58,6 +58,9 @@ These properties are like so:
 - `FPAP_PROPERTY_INPUT` gets the input as an `fpap_ext_input_event`.
 - `FPAP_PROPERTY_INPUT_POP` gets the input as before and remove it from the
 input list so it may not be retrieved.
+- `FPAP_PROPERTY_ROTATION` is an `FPAP_BYTE` which may is read as an (x mod 4)
+rotation such that the user may flip their view quad along the four cardinal
+directions (allows for drawing columns using memset).
 
 An example might look like so:
 
@@ -79,3 +82,9 @@ int main(void)
 	fpap_term(instance);
 }
 ```
+
+## The Test Program
+
+The test program may be run with `./make.sh -t` and draws a rotating set of
+four scaled up corner pixels of multiple colors on an 8x8 grid, which may be
+exitted at any time with `q`.

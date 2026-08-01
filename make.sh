@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+if [[ "$EUID" -eq 0 ]]; then
+	echo "Do not run as root."
+	exit 1
+fi
+
 TARGET="fpap"
 CFLAGS="-std=c90 -Wpedantic"
 DEBUG=false
@@ -62,6 +67,6 @@ if [[ $INSTALL = true ]]; then
 		ar --output build libfpap.a $TARGET
 		TARGET=build/libfpap.a
 	fi
-	cp $TARGET $ITARGET
-	cp src/fpap.h /usr/include/fpap.h
+	sudo cp $TARGET $ITARGET
+	sudo cp src/fpap.h /usr/include/fpap.h
 fi
