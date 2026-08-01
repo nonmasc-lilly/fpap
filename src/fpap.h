@@ -37,6 +37,7 @@ typedef enum {
 	FPAP_INACCESSIBLE
 } FPAP_ERROR;
 typedef void *FPAP_PTR;
+typedef const void *FPAP_CONST_PTR;
 typedef FPAP_PTR FPAP_STR;
 typedef FPAP_PTR FPAP;
 
@@ -56,7 +57,7 @@ FPAP_ERROR fpap_frame(FPAP instance);
 FPAP_ERROR fpap_draw(FPAP instance, FPAP_COLOR *content, FPAP_COORD width,
 	FPAP_COORD height);
 FPAP_ERROR fpap_set(FPAP instance, FPAP_PROPERTY property,
-	const FPAP_PTR value);
+	FPAP_CONST_PTR value);
 FPAP_ERROR fpap_get(FPAP instance, FPAP_PROPERTY property, FPAP_PTR value);
 
 #endif

@@ -175,7 +175,7 @@ FPAP_ERROR fpap_term(FPAP instance)
 }
 
 FPAP_ERROR fpap_set(FPAP instance, FPAP_PROPERTY property,
-const FPAP_PTR value)
+FPAP_CONST_PTR value)
 {
 	struct s_fpap *fpap;
 

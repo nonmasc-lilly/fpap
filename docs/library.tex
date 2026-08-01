@@ -12,6 +12,7 @@
 \bullet{\tt FPAP\_PROPERTY} The type representing a propery of an instance.
 \bullet{\tt FPAP\_ERROR} The type representing an error code.
 \bullet{\tt FPAP\_PTR} The type representing an address.
+\bullet{\tt FPAP\_CONST\_PTR} The type represents a readonly address.
 \bullet{\tt FPAP\_STR} The type representing a pointer.
 \bullet{\tt FPAP} The type representing a pointer to the current instance.
 
@@ -70,7 +71,7 @@ width and height designate the geometry of content.
 \next{fpap\_set}
 \code
 FPAP\_ERROR fpap\_set(FPAP instance, FPAP\_PROPERTY property,\cr
-\qquad FPAP\_PTR value)\cr
+\qquad FPAP\_CONST\_PTR value)\cr
 \ecode
 \noindent The implementation defined property specified shall be set to the
 region of memory at that specified in value.
