@@ -16,6 +16,15 @@
 \bullet{\tt FPAP\_STR} The type representing a pointer.
 \bullet{\tt FPAP} The type representing a pointer to the current instance.
 
+\noindent Thus the following shall also be defined, alongside those in \S 2.1
+\sl Numeric Limits\rm:
+
+\halign{\tt#\cr
+	FPAP\_COORD\_MAX == FPAP\_DWORD\_MAX,\cr
+	FPAP\_CONST\_PTR\_MIN == FPAP\_PTR\_MIN,\cr
+	FPAP\_CONST\_PTR\_MAX == FPAP\_PTR\_MAX,\cr
+}
+
 \section{Functions}
 
 \noindent The following functions shall exist:

@@ -15,9 +15,9 @@ parenthesis.
 
 \limitcount0\relax
 \limit FPAP\_BYTE: (0, 127)
-\limit FPAP\_WORD: (0, maxof(\tt FPAP\_BYTE\rm) * 2)
-\limit FPAP\_DWORD: (0, maxof(\tt FPAP\_BYTE\rm) * 4)
-\limit FPAP\_COLOR: (0, maxof(\tt FPAP\_DWORD\rm))
+\limit FPAP\_WORD: (0, 65535)
+\limit FPAP\_DWORD: (0, 4294967295)
+\limit FPAP\_COLOR: (0, 1)
 \limit FPAP\_BOOL:  (FPAP\_FALSE, FPAP\_TRUE)
 
 \noindent The type `FPAP\_PTR' has unspecified limits, yet shall be able to
@@ -30,6 +30,26 @@ in \S 2.2 Error Codes).
 
 The type `FPAP\_PROPERTIES' has limits implementation defined according to the
 number of properties defined for the `fpap\_set' and `fpap\_get' functions.
+
+As such the following should be defined within the documentation for the
+implemtnation, or otherwise specified within the program with the identifiers
+given (i.e., C macros):
+
+\halign{\tt#\hfil\cr
+	FPAP\_BYTE\_MAX >= 127,\cr
+	FPAP\_WORD\_MAX >= 65535,\cr
+	FPAP\_DWORD\_MAX >= 4294967295,\cr
+	FPAP\_COLOR\_MAX >= 1,\cr
+	FPAP\_BOOL\_MIN == FPAP\_FALSE,\cr
+	FPAP\_BOOL\_MAX == FPAP\_TRUE,\cr
+	FPAP\_PTR\_MIN == implementation defined,\cr
+	FPAP\_PTR\_MAX == implementation defined,\cr
+	FPAP\_ERROR\_MIN == defined by error codes,\cr
+	FPAP\_ERROR\_MAX == defined by error codes,\cr
+	FPAP\_PROPERTIES\_MIN == implementation defined,\cr
+	FPAP\_PROPERTIES\_MAX == implementation defined\cr
+}
+	
 
 \section{Error Codes}
 
